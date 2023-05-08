@@ -1,20 +1,21 @@
 <?php 
 /**
- * Template Name: Portfolio Template
+ * Template Name: Food Template
  */
 
 get_header() ?>
 
+
 <?php 
     $args = [
-        'post_type'=> 'Food',
-        'posts_per_page'=>3
+        'post_type'=> 'food',
+        'posts_per_page'=>10
     ];
 
-    $Foods = new WP_Query($args);
+    $foods = new WP_Query($args);
 
-    if($Foods->have_posts()):
-        while ($Foods->have_posts()): $Foods->the_post();
+    if($foods->have_posts()):
+        while ($foods->have_posts()): $foods->the_post();
         ?>
 
             <div class="card">
@@ -36,3 +37,4 @@ endif;
                 <h6 href="#" class="card-link"> <?php next_posts_link() ?></h6>
 
 <?php get_footer() ?>
+

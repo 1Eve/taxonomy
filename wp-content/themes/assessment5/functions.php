@@ -107,7 +107,7 @@ function food_post_type(){
 add_action('init', 'food_post_type');
 
 // CUSTOM TAXONOMY
-function Protein_custom_taxonomy(){
+function Nutrient_custom_taxonomy(){
     $labels = [
         'name'=> 'Nutrients',
         'singular_name'=> 'Nutrient',
@@ -148,7 +148,7 @@ function Protein_custom_taxonomy(){
     ]);
 }
 
-add_action('init', 'Protein_custom_taxonomy');
+add_action('init', 'Nutrient_custom_taxonomy');
 
 // CUSTOM TERM FUNCTION
 

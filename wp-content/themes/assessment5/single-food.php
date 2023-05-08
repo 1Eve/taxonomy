@@ -18,19 +18,6 @@
                         echo 'Nutrient: '; 
 
                         echo customterm_get_terms($post->ID, 'nutrient');
-
-                        // $termslist = wp_get_post_terms($post->ID, 'career');
-
-                        // $i = 0;
-
-                        // foreach ($termslist as $term){
-                        //     $i++;
-                            
-                        //     if($i>1){
-                        //         echo ', ';
-                        //     }
-                        //     echo $term->name. ' ';
-                        // }
                     
                     ?></p>
 
@@ -39,19 +26,6 @@
 
                         echo customterm_get_terms($post->ID, 'Description');
 
-                        // $termslist = wp_get_post_terms($post->ID, 'software');
-
-                        // $i = 0;
-
-                        // foreach ($termslist as $term){
-                        //     $i++;
-                            
-                        //     if($i>1){
-                        //         echo ', ';
-                        //     }
-                        //     echo $term->name. ' ';
-                        // }
-                    
                     ?></p>
                     <h6 href="#" class="card-link"><?php previous_post_link();?></h6>
                     <h6 href="#" class="card-link"> <?php next_post_link() ?></h6>
