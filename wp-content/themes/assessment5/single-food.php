@@ -15,9 +15,9 @@
                     <p class="card-text"><?php the_content(); ?></p>
                     <p class="card-text"><?php echo 'Categories: '; the_category(); ?></p>
                     <p class="card-text"><?php 
-                        echo 'Careers: '; 
+                        echo 'Nutrient: '; 
 
-                        echo customterm_get_terms($post->ID, 'career');
+                        echo customterm_get_terms($post->ID, 'nutrient');
 
                         // $termslist = wp_get_post_terms($post->ID, 'career');
 
@@ -35,9 +35,9 @@
                     ?></p>
 
                     <p class="card-text"><?php 
-                        echo 'Soft wares: '; 
+                        echo 'Decription: '; 
 
-                        echo customterm_get_terms($post->ID, 'software');
+                        echo customterm_get_terms($post->ID, 'Description');
 
                         // $termslist = wp_get_post_terms($post->ID, 'software');
 

@@ -1,20 +1,20 @@
 <?php 
 /**
- * Template Name: Food Template
+ * Template Name: Portfolio Template
  */
 
 get_header() ?>
 
 <?php 
     $args = [
-        'post_type'=> 'food',
+        'post_type'=> 'Food',
         'posts_per_page'=>3
     ];
 
-    $foods = new WP_Query($args);
+    $Foods = new WP_Query($args);
 
-    if($foods->have_posts()):
-        while ($foods->have_posts()): $foods->the_post();
+    if($Foods->have_posts()):
+        while ($Foods->have_posts()): $Foods->the_post();
         ?>
 
             <div class="card">

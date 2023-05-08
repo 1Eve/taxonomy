@@ -1,26 +1,35 @@
 <?php
-    function shopit_theme_styles() {
-        wp_register_style('bootstrapcss', 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css', [], '5.2.3', 'all');
 
-        wp_enqueue_style('bootstrapcss');
+function c13theme_script_enqueue(){
+    wp_enqueue_style('customstyle', get_template_directory_uri().'/custom/custom.css', [], '3.1.1', 'all');
+    wp_enqueue_script('customjs', get_template_directory_uri(). '/custom/custom.js',[], '1.0.0', true);
 
-        wp_register_script('jsbootstrap','https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js', [], '5.2.3', false);
-        wp_enqueue_script ('jsbootstrap');
+    // Using bootstrap
+    wp_register_style('bootstrapcss', 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css', [], '5.2.3', 'all');
 
-        wp_enqueue_style('customcss',  get_template_directory_uri().'/custom/custom.css', [], '1.0.0', 'all');
- 
-    }
+    wp_enqueue_style('bootstrapcss');
 
-    add_action('wp_enqueue_scripts', 'shopit_theme_styles');
+    wp_register_script('jsbootstrap','https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js', [], '5.2.3', false);
+    wp_enqueue_script ('jsbootstrap');
+}
+
+add_action('wp_enqueue_scripts', 'c13theme_script_enqueue');
 
 // ADDING MENUS - HEADER AND FOOTER
 
-    function shopit_theme_setup(){
-        add_theme_support('menus');
-        register_nav_menu('primary', 'Primary Header');
-        register_nav_menu('secondary', 'Footer Navigation');
-    }
-    add_action('init', 'shopit_theme_setup');
+function c13theme_setup(){
+    add_theme_support('menus');
+    register_nav_menu('primary', 'Primary Header');
+    register_nav_menu('secondary', 'Footer Navigation');
+}
+// ADDING NAVWALKER CLASS
+if ( ! file_exists( get_template_directory() . '/class-wp-bootstrap-navwalker.php' ) ) {
+    return new WP_Error( 'class-wp-bootstrap-navwalker-missing', __( 'It appears the class-wp-bootstrap-navwalker.php file may be missing.', 'wp-bootstrap-navwalker' ) );
+} else {
+    require_once get_template_directory() . '/class-wp-bootstrap-navwalker.php';
+}
+add_action('init','c13theme_setup');
+
 
 /**
  * THEME SUPPORT
@@ -32,27 +41,37 @@
 
  add_theme_support('post-formats',['aside', 'image', 'video']);
 
+function c13theme_sidebar_Setup(){
+    register_sidebar([
+        'name'=> 'Sidebar',
+        'id'=>'sidebar-1',
+        'class'=>'custom',
+        'description'=> 'Standard Sidebar',
+        'before_widget'  => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'   => "</aside>\n",
+		'before_title'   => '<h2 class="widgettitle">',
+		'after_title'    => "</h2>\n",
+        'show_in_rest'   => false
+    ]);
+}
 
-// ADDING NAVWALKER CLASS
-    if ( ! file_exists( get_template_directory() . '/class-wp-bootstrap-navwalker.php' ) ) {
-        return new WP_Error( 'class-wp-bootstrap-navwalker-missing', __( 'It appears the class-wp-bootstrap-navwalker.php file may be missing.', 'wp-bootstrap-navwalker' ) );
-    } else {
-        require_once get_template_directory() . '/class-wp-bootstrap-navwalker.php';
-    }
-    
+add_action('widgets_init', 'c13theme_sidebar_Setup');
 
-    // CUSTOM POST TYPE
+// Converting HTML TO HTML5 FOR  SEARCH FORM
+add_theme_support('html5', ['search-form']);
 
-function foods_post_type(){
+// CUSTOM POST TYPE
+
+function food_post_type(){
     $labels = [
-        'name'=> 'foods',
-        'singular_name'=> 'food',
-        'add_new'=> 'Add food Item',
-        'all_items'=> 'All foods',
-        'add_new_item'=> 'Add Item',
+        'name'=> 'Foods',
+        'singular_name'=> 'Food',
+        'add_new'=> 'Add Food Item',
+        'all_items'=> 'All Foods',
+        'add_new_item'=> 'Edit Item',
         'new_item'=> 'New Items',
         'view_item'=> 'View Item',
-        'search_item'=> 'Search Foods',
+        'search_item'=> 'Search Food',
         'not_found'=> 'No Items found',
         'not_found_in_trash'=> 'No Items found in trash',
         'parent_item_colon'=> 'Parent Item'
@@ -85,22 +104,22 @@ function foods_post_type(){
     register_post_type('food', $args);
 }
 
-add_action('init', 'foods_post_type');
+add_action('init', 'food_post_type');
 
 // CUSTOM TAXONOMY
-function protein_custom_taxonomy(){
+function Protein_custom_taxonomy(){
     $labels = [
-        'name'=> 'Proteins',
-        'singular_name'=> 'Protein',
-        'search_items'=> 'Search Proteins',
-        'all_items'=>'All Protein',
-        'parent_item'=> 'Parent Protein',
-        'parent_item_colon'=> 'Parent Protein',
-        'edit_item'=> 'Edit Protein',
-        'update_item'=> 'Update Protein',
-        'add_new_item'=> 'Add New Protein',
-        'new_item_name'=> 'New Protein Name',
-        'menu_name'=>'Proteins'
+        'name'=> 'Nutrients',
+        'singular_name'=> 'Nutrient',
+        'search_items'=> 'Search Nutrient',
+        'all_items'=>'All Nutrient',
+        'parent_item'=> 'Parent Nutrient',
+        'parent_item_colon'=> 'Parent Nutrient',
+        'edit_item'=> 'Edit Nutrient',
+        'update_item'=> 'Update Nutrient',
+        'add_new_item'=> 'Add New Nutrient',
+        'new_item_name'=> 'New Nutrient Name',
+        'menu_name'=>'Nutrient'
     ];
 
     $args = [
@@ -110,32 +129,26 @@ function protein_custom_taxonomy(){
         'show_admin_column'=>true,
         'query_var'=>true,
         'rewrite'=>[
-            'slug'=>'Protein'
+            'slug'=>'nutrient'
         ]
         ];
 
-    register_taxonomy('Protein', ['food'], $args);
+    register_taxonomy('nutrient', ['food'], $args);
 
     // NON-HIERARCHICAL TAXONOMY
-    register_taxonomy('Food-Type', ['food'], [
+    register_taxonomy('Description', ['food'], [
         'hierarchical'=> false,
-        'label'=> 'Software',
+        'label'=> 'Description',
         'show_ui'=>true,
         'show_admin_column'=>true,
         'query_var'=>true,
         'rewrite'=>[
-            'slug'=> 'Organic'
+            'slug'=> 'Description'
         ]
     ]);
 }
 
-add_action('init', 'protein_custom_taxonomy');
-
-
-//////////////////////////////////////////////////////////
-
-
-
+add_action('init', 'Protein_custom_taxonomy');
 
 // CUSTOM TERM FUNCTION
 
