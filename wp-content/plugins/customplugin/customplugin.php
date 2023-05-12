@@ -72,7 +72,7 @@ class Cohort_Members_Plugin
     padding: 10px 20px;
     border: none;
     border-radius: 3px;
-    cursor: pointer; form input[type=" submit"]:hover { background-color: #45a049; } " type=" submit" value="Add Member">
+    cursor: pointer;" type=" submit" value="Add Member">
                 </form>
             </div>
 <?php
